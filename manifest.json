@@ -1,0 +1,17 @@
+{
+    "name":"Rich Text Editor",
+    "short_name":"Rich Text Editor",
+    "start_url":".",
+    "background_color":"#fff",
+    "theme_color":"#FF9029",
+    "display":"standalone",
+    "icons":[
+        {
+            "src":"./EditorApp2.png",
+            "sizes":"512x512",
+            "type":"image/png"
+        }
+        
+    ]
+
+}

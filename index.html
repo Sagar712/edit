@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+      crossorigin="anonymous"
+    />
+    <link rel="shortcut icon" href="./EditorApp2.png" type="image/x-icon">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+    <script type="text/javascript">
+        if(localStorage.getItem("DarkModeEditApp") == null)
+            localStorage.setItem("DarkModeEditApp", "on");
+        let mode =localStorage.getItem("DarkModeEditApp");
+        if(mode=="off")
+            document.documentElement.setAttribute("data-theme", "root");
+        else
+            document.documentElement.setAttribute("data-theme", "dark");
+    </script>
+</head>
+<body>
+    <div class="skipbtn" onclick="location.href='./ShowContent/show.html'">
+        Skip >
+    </div>
+
+    <div class="hero">
+        <i class="fas fa-pencil-alt"></i>
+    </div>
+
+    <div class="container">
+        <div class="inputs">
+            <input type="text" placeholder="Enter User id.." id="uname">
+            <div class="go" onclick="saveUsername()">></div>
+        </div>
+        <p>Please provide username for <br>
+            first login to backup things </p>
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>
