@@ -1,3 +1,4 @@
+/*
 self.addEventListener("install", e => {
     e.waitUntil(
         caches.open("Edit Rich Text").then(cache => {
@@ -17,3 +18,4 @@ self.addEventListener("fetch", e => {
     );
   
 });
+*/

@@ -1,4 +1,3 @@
-
 let dark=1;
 if(localStorage.getItem("DarkModeEditApp") == "on"){
     dark=0;

@@ -8,19 +8,57 @@ if("serviceWorker" in navigator){
         console.log("SW failed");
     })
 }
+
+if(localStorage.getItem('InFileMode')==null){
+    localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+    console.log(JSON.parse(localStorage.getItem('InFileMode')));
+}
+if(localStorage.getItem('AllItems')==null){
+    let allFilesData = {
+    
+    }
+    localStorage.setItem('AllItems', JSON.stringify(allFilesData));
+}
 let clicked = false;
 const content = document.querySelector('.content');
 function triggerFirstClick() {
     document.querySelector('.tools').style.transform='translateX(-50%)';
-        clicked=true;
-        content.contentEditable=true;
-        content.focus();
-        console.log('Clicked');
+    clicked=true;
+    content.contentEditable=true;
+    content.focus();
+    console.log('Clicked');
 }
 
 function printIt(){
     console.log('typing...');
     savedata();
+}
+
+let dark=1;
+if(localStorage.getItem("DarkModeEditApp") == "on"){
+    document.querySelector('.circle').classList.add('move');
+    document.querySelector('.toggleme').classList.add('move');
+    dark=0;
+}
+function toggleCirc() {
+    document.querySelector('.circle').classList.toggle('move');
+    document.querySelector('.toggleme').classList.toggle('move');
+    if(dark==1){
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("DarkModeEditApp", "on");
+        dark=0;
+    }
+    else{
+        document.documentElement.setAttribute("data-theme", "root");
+        localStorage.setItem("DarkModeEditApp", "off");
+        dark=1;
+    }
+    renderer();
+}
+
+function toggleMenu() {
+    document.querySelector('.menuItems').classList.toggle('active');
+    document.querySelector('.opacitor').classList.toggle('active');
 }
 
 function saveAndExit() {
@@ -29,6 +67,12 @@ function saveAndExit() {
     content.contentEditable=false;
     renderer();
     animatToast("Temp file saved !", "rgb(175, 255, 206)");
+}
+
+function refreshContent() {
+    localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+    renderer();
+    content.innerHTML = "";
 }
 
 const allbtns = document.querySelectorAll('.btn');
@@ -75,8 +119,28 @@ allbtns.forEach(butn => {
 });
 
 function savedata() {
+    const status = JSON.parse(localStorage.getItem('InFileMode'));
     const source = document.querySelector('.content').innerHTML;
-    localStorage.setItem('TextOfEditor', source);
+    let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
+    if(status.file == 0){
+        AllTextItems[0]={
+            name:'Unsaved file',
+            data:source
+        }
+    }
+    else{
+        AllTextItems[status.file]={
+            name:AllTextItems[status.file].name,
+            data:source
+        }
+    }  
+    localStorage.setItem('AllItems', JSON.stringify(AllTextItems));
+}
+
+
+function popSaveAs() {
+    document.querySelector('.saveAs').classList.toggle('show');
+    document.querySelector('.opacitor3').classList.toggle('active');
 }
 
 function animatToast(msg, bgColor) {
@@ -89,24 +153,120 @@ function animatToast(msg, bgColor) {
     setTimeout(() => {
         toastNote.classList.remove('animate');
     }, 1500);
-    console.log(toastNote.classList);
+    //console.log(toastNote.classList);
+}
+
+function popupfiles() {
+    document.querySelector('.chooseFiles').classList.toggle('show');
+    document.querySelector('.opacitor2').classList.toggle('active');
+}
+
+
+
+function CreateFile() {
+    const filename = document.querySelector('.fileName').value;
+    const Data = document.querySelector('.content').innerHTML;
+    
+    let i=1;
+    let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
+    while(AllTextItems[i]!=null){
+        i++;
+    }
+    AllTextItems[i] = {
+        name:filename,
+        data:Data
+    }   
+    localStorage.setItem('AllItems', JSON.stringify(AllTextItems));
+    localStorage.setItem('InFileMode', JSON.stringify({mode:'on', file:i}));
+    popSaveAs();
+    renderer();
+}
+
+function openFile(id) {
+    if(id == 0)
+        localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+    else
+        localStorage.setItem('InFileMode', JSON.stringify({mode:'on', file:id}));
+    
+    popupfiles();
+    renderer();
+}
+
+function deleteItem(id) {
+    if(confirm("Confirm deletion?")){
+        let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
+        let deltion = {
+
+        };
+        let num=1;
+        let i=1;
+        while(AllTextItems[i]!=null){
+            if(i == id){
+                
+            }
+            else{
+                deltion[num++] = AllTextItems[i];
+            }
+            i++;
+        }
+        localStorage.setItem('AllItems', JSON.stringify(deltion));
+
+        console.log(deltion);
+        animatToast("Deleted successfully!", "pink");
+        localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+        renderer();
+    }
+    else{
+        animatToast("Calcelled deletion!", "pink");
+    }
 }
 
 function renderer() {
-    document.querySelector('.content').innerHTML = localStorage.getItem('TextOfEditor');
+    const status = JSON.parse(localStorage.getItem('InFileMode'));
+    let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
+    console.log(AllTextItems);
+    if(AllTextItems[status.file] != null)
+    document.querySelector('.content').innerHTML = AllTextItems[status.file].data;
 
+    if(status.mode == "on"){
+        animatToast('File loaded successfuly !', 'azure');
+        document.querySelectorAll('.filenameDisplay').forEach(nameOf => {
+            nameOf.textContent = AllTextItems[status.file].name;
+        });
+        document.querySelectorAll('.hideIf').forEach(nameOf => {
+            nameOf.style.display = "none";
+        });
+    }
+    else{
+        document.querySelectorAll('.filenameDisplay').forEach(nameOf => {
+            nameOf.textContent = "Select file";
+        });
+        document.querySelectorAll('.hideIf').forEach(nameOf => {
+            nameOf.style.display = "flex";
+        });
+    }
+    let j=1;
+    let Str = "<li onclick='openFile(0)'>Unsaved file</li>"
+    while(AllTextItems[j]!=null){
+        Str = Str.concat(`<li><p onclick='openFile(${j})'> ${AllTextItems[j].name}</p> <div onclick="deleteItem(${j})"><i class="fas fa-trash-alt"></i></div></li>`);
+        j++;
+    }
+    document.querySelector('.allFiles').innerHTML = Str;
+    
     //To set theme
     const fonts = document.querySelectorAll('font');
     if(localStorage.getItem('DarkModeEditApp') == 'off'){
         fonts.forEach(font => {
-            if(font.color == "#fdff70"){
+            console.log('red color');
+            if(font.color){
                 font.color = "#9D0000";
             }
         });
     }
     else if(localStorage.getItem('DarkModeEditApp') == 'on'){
         fonts.forEach(font => { 
-            if(font.color == "#9D0000"){
+            console.log('yellow color');
+            if(font.color){
                 font.color = "#fdff70";
             }
         });

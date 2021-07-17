@@ -23,6 +23,58 @@
     </script>
 </head>
 <body>
+    <div class="opacitor2" onclick="popupfiles()"></div>
+    <div class="opacitor3" onclick="popSaveAs()"></div>
+    <header>
+        <div class="menusDesktop">
+            <div class="cotainer">
+                <div class="btn" data-element="bold"><i class="fas fa-bold"></i></div>
+                <div class="btn" data-element="italic"><i class="fas fa-italic"></i></div>
+                <div class="btn" data-element="underline"><i class="fas fa-underline"></i></div>
+                <div class="btn" data-element="fontSize"><i class="fas fa-text-height"></i></div>
+                <div class="btn" data-element="foreColor"><i class="fas fa-palette"></i></div>
+                <div class="btn" data-element="insertUnorderedList"><i class="fas fa-list-ul"></i></div>
+                <div class="btn" onclick="triggerFirstClick()"><i class="fas fa-pen"></i></div>
+                <div class="btn" onclick="saveAndExit()"><i class="fas fa-check"></i></div>
+            </div>
+
+            <ul>
+                <li onclick="popupfiles()" class="filenameDisplay">Select file</li>
+                <li onclick="popSaveAs()" class="hideIf">Save as</li>
+                <li onclick="refreshContent()">New</li>
+                <li onclick="triggerFirstClick()">Edit</li>
+                <li onclick="">Import | Export</li>
+                <li onclick="toggleCirc()">Night</li>
+            </ul>
+        </div>
+    </header>
+    <div class="stripformobile"></div>
+
+    <div class="chooseFiles">
+        <ul class="allFiles">
+            <li>Option1</li>
+            <li>Option 2</li>
+        </ul>
+    </div>
+    <div class="saveAs">
+        <input type="text" placeholder="Enter filename.." class="fileName">
+        <div onclick="CreateFile()">Save</div>
+    </div>
+
+    <div class="menuItems">
+        <ul>
+            <li onclick="location.href='./import-export/import-export.html'"><p>Export | Import</p>
+                <i class="fas fa-file-alt" style="font-size: 1.3rem; margin-left: 1rem; font-weight: bolder;"></i>
+            </li>
+            <li>
+                <p>Night</p>
+                <div class="toggleme" style="margin-left: 3.7rem;" onclick="toggleCirc()">
+                    <div class="circle"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="opacitor" onclick="toggleMenu()"></div>
     <div class="container">
         <pre class="content"  onkeyup="printIt()" onblur="focus()"></pre>
     </div>
@@ -31,11 +83,11 @@
 
     <div class="tools">
         <div class="toolbar1">
-            <div>Select File</div>
-            <div>New</div>
-            <div>Save as</div>
+            <div onclick="popupfiles()" class="filenameDisplay">Select File</div>
+            <div onclick="popSaveAs()" class="hideIf">Save as</div>
+            <div onclick="refreshContent()">New</div>
             <div onclick="triggerFirstClick()"><i class="fas fa-pen"></i></div>
-            <div><i class="fas fa-ellipsis-v"></i></div>
+            <div onclick="toggleMenu()"><i class="fas fa-ellipsis-v"></i></div>
         </div>
         <div class="toolbar1">
             <div class="btn" data-element="bold"><i class="fas fa-bold"></i></div>
@@ -47,6 +99,8 @@
             <div onclick="saveAndExit()"><i class="fas fa-check"></i></div>
         </div>
     </div>
+
+    
 
     <script src="./show.js"></script>
 </body>
