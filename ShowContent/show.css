@@ -118,7 +118,7 @@ header{
     transform: translate(-50%, -50%);
     height: 10rem;
     width: 17rem;
-    background-color: var(--table-color);
+    background-color: var(--background-color);
     border: 2px solid var(--table-border);
     color: var(--text-color);
     border-radius: 5px;
@@ -128,7 +128,7 @@ header{
 .saveAs input{
     height: 1.7rem;
     width: 13rem;
-    background-color: var(--table-color);
+    background-color: var(--background-color);
     border: 2px solid var(--table-border);
     border-radius: 5px;
     font-size: 1.2rem;
@@ -163,7 +163,7 @@ header{
     transform: translate(-50%, -50%);
     height: 25rem;
     width: 20rem;
-    background-color: var(--table-color);
+    background-color: var(--background-color);
     border: 2px solid var(--table-border);
     color: var(--text-color);
     border-radius: 5px;
