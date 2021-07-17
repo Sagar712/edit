@@ -71,7 +71,11 @@ body{
 .menuItems{
     display: none;
 }
-
+header{
+    position: sticky;
+    top: 0;
+    left: 0;
+}
 .menusDesktop{
     display: flex;
     justify-content: space-between;
