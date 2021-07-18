@@ -24,14 +24,55 @@
 }
 
 body{
+    min-height: 100vh;
     width: 100vw;
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     transition: 1s all ease;
     overflow-x: hidden;
+}
+
+.giantContainer{
+    display: flex;
+    width: 100vw;
+}
+
+.cotainer1{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}   
+
+#Notepad1{
+    animation: notepads 2s linear infinite;
+    transform-origin: top;
+    transform-box: fill-box;
+}
+#Notepad2{
+    animation: notepads 2s linear infinite 1s;
+    transform-origin: top;
+    transform-box: fill-box;
+}
+@keyframes notepads {
+    0%, 100%{
+        transform: rotateZ(0deg);
+    }
+    33%{
+        transform: rotateZ(5deg);
+    }
+    66%{
+        transform: rotateZ(-5deg);
+    }
+}
+
+#HandsandNotepad{
+    animation: notepads 2s linear infinite;
+    transform-origin: center;
+    transform-box: fill-box;
 }
 
 .skipbtn{
@@ -53,17 +94,17 @@ body{
 }
 
 .hero{
-    font-size: 7rem;
+    font-size: 5rem;
     color: var(--pencil-color);
-    margin-top: 7rem;
+    margin-bottom: 3rem;
 }
 
 .container{
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    margin-top: 4rem;
 }
 .inputs{
     display: flex;
@@ -108,3 +149,16 @@ body{
     text-align: center;
 }
 
+@media screen and (max-width:930px)  {
+    .giantContainer{
+        margin-top: 4rem;
+        min-height: 100h;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: space-between;
+        width: 100vw;
+    }
+    .hero{
+        display: none;
+    }
+}

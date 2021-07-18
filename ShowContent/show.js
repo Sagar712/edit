@@ -8,17 +8,51 @@ if("serviceWorker" in navigator){
         console.log("SW failed");
     })
 }
-
-if(localStorage.getItem('InFileMode')==null){
-    localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
-    console.log(JSON.parse(localStorage.getItem('InFileMode')));
-}
+const AppUrl = 'https://secret-script.herokuapp.com/script/';
 if(localStorage.getItem('AllItems')==null){
     let allFilesData = {
     
     }
     localStorage.setItem('AllItems', JSON.stringify(allFilesData));
 }
+let Data = JSON.parse(localStorage.getItem('AllItems'));
+if(Data['username']!=null){
+    animatToast(`Signed as ${Data['username']}`, 'azure');
+    const data = {
+        username: "This is to store data",
+        email: Data['username'],
+        password: localStorage.getItem('AllItems')
+    };
+    if(window.navigator.onLine){
+        fetch(AppUrl+Data['username'],{method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
+        .then(res => {
+            return res.json();
+        })
+        .then(response => {
+            if(response.msg == 'Updated successfully'){
+                setTimeout(() => {
+                    animatToast('Data backup succesful !', 'rgb(217, 159, 255)');
+                }, 2000);
+            }
+            else{
+                setTimeout(() => {
+                    animatToast('Data backup failed !', 'pink');
+                }, 2000);
+            }
+        });
+    }
+    else{
+        setTimeout(() => {
+            animatToast('Data backup failed !', 'pink');
+        }, 2000);
+    }
+}
+
+if(localStorage.getItem('InFileMode')==null){
+    localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+    console.log(JSON.parse(localStorage.getItem('InFileMode')));
+}
+
 let clicked = false;
 const content = document.querySelector('.content');
 function triggerFirstClick() {
@@ -229,7 +263,6 @@ function renderer() {
     document.querySelector('.content').innerHTML = AllTextItems[status.file].data;
 
     if(status.mode == "on"){
-        animatToast('File loaded successfuly !', 'azure');
         document.querySelectorAll('.filenameDisplay').forEach(nameOf => {
             nameOf.textContent = AllTextItems[status.file].name;
         });

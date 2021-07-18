@@ -286,12 +286,7 @@ header{
 .opacitor3.active{
     display: block;
 }
-.filenameDisplay{
-    max-width: 10rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+
 .stripformobile{display: none;}
 
 
@@ -468,5 +463,11 @@ header{
         top: 0;
         left: 0;
         background-color: var(--menu-item);
+    }
+    .filenameDisplay{
+        max-width: 10rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
