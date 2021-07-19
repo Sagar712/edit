@@ -3,7 +3,7 @@
     "short_name":"Rich Text Editor",
     "start_url":".",
     "background_color":"#fff",
-    "theme_color":"#FF9029",
+    "theme_color":"#6C63FF",
     "display":"standalone",
     "icons":[
         {
