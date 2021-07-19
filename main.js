@@ -47,10 +47,11 @@ async function saveUsername() {
         Data['username'] = uname;
         localStorage.setItem('AllItems', JSON.stringify(Data));
         const data = {
-            username: "",
+            username: "hello",
             email: uname,
-            password: ""
+            password: "hello"
         };
+        console.log(data);
         await fetch(AppUrl,{method:'post', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
         .then(res => {
             return res.json();
