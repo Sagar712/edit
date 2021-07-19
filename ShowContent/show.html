@@ -41,7 +41,6 @@
                 <li onclick="popupfiles()" class="filenameDisplay">Select file</li>
                 <li onclick="popSaveAs()" class="hideIf">Save as</li>
                 <li onclick="refreshContent()">New</li>
-                <li onclick="triggerFirstClick()">Edit</li>
                 <li onclick="">Import | Export</li>
                 <li onclick="toggleCirc()">Night</li>
             </ul>
@@ -85,7 +84,6 @@
             <div onclick="popupfiles()" ><p class="filenameDisplay">Select File</p> </div>
             <div onclick="popSaveAs()" class="hideIf">Save as</div>
             <div onclick="refreshContent()">New</div>
-            <div onclick="triggerFirstClick()"><i class="fas fa-pen"></i></div>
             <div onclick="toggleMenu()"><i class="fas fa-ellipsis-v"></i></div>
         </div>
         <div class="toolbar1">
@@ -98,9 +96,10 @@
             <div onclick="saveAndExit()"><i class="fas fa-check"></i></div>
         </div>
     </div>
-
+    <div class="editBtn">
+        <div onclick="triggerFirstClick()"><i class="fas fa-pen"></i></div>
+    </div>
     
-
     <script src="./show.js"></script>
 </body>
 </html>

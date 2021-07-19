@@ -57,6 +57,7 @@ let clicked = false;
 const content = document.querySelector('.content');
 function triggerFirstClick() {
     document.querySelector('.tools').style.transform='translateX(-50%)';
+    document.querySelector('.editBtn').classList.add('hide');
     clicked=true;
     content.contentEditable=true;
     content.focus();
@@ -97,6 +98,7 @@ function toggleMenu() {
 
 function saveAndExit() {
     savedata();
+    document.querySelector('.editBtn').classList.remove('hide');
     document.querySelector('.tools').style.transform='translateX(0%)';
     content.contentEditable=false;
     renderer();
@@ -279,7 +281,7 @@ function renderer() {
         });
     }
     let j=1;
-    let Str = "<li onclick='openFile(0)'>Unsaved file</li>"
+    let Str = "<li onclick='openFile(0)'><p>Unsaved file</p></li>"
     while(AllTextItems[j]!=null){
         Str = Str.concat(`<li><p onclick='openFile(${j})'> ${AllTextItems[j].name}</p> <div onclick="deleteItem(${j})"><i class="fas fa-trash-alt"></i></div></li>`);
         j++;

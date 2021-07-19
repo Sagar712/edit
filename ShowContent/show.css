@@ -52,8 +52,8 @@ body{
     font-size: 1.1rem;
     background-color: var(--background-color);
     color: var(--text-color);
-    margin-top: 1rem;
-    margin-bottom: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 25vh;
     outline: none;
     border-radius: 5px;
     transition: 1s all ease;
@@ -121,7 +121,7 @@ header{
     background-color: var(--background-color);
     border: 2px solid var(--table-border);
     color: var(--text-color);
-    border-radius: 5px;
+    border-radius: 15px;
     transition: 0.5s all ease;
     z-index: 9999;
 }
@@ -166,7 +166,7 @@ header{
     background-color: var(--background-color);
     border: 2px solid var(--table-border);
     color: var(--text-color);
-    border-radius: 5px;
+    border-radius: 15px;
     overflow-y: scroll;
     transition: 0.5s all ease;
     z-index: 9999;
@@ -176,7 +176,7 @@ header{
     padding-left: 0;
 }
 .chooseFiles li{
-    height: 2.3rem;
+    height: 3rem;
     width: 100%;
     border-bottom: 2px solid var(--table-border);
     text-overflow: ellipsis;
@@ -186,18 +186,22 @@ header{
     align-items: center;
 }
 .chooseFiles p{
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
     flex: 1;
     cursor: pointer;
+    margin-left: 1rem;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .chooseFiles div{
     height: 100%;
-    width: 2.5rem;
+    width: 3rem;
     border-left:2px solid rgb(126, 126, 126);
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     color: red;
     cursor: pointer;
 
@@ -286,13 +290,38 @@ header{
 .opacitor3.active{
     display: block;
 }
+.editBtn{
+    position: fixed;
+    bottom: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 3rem;
+    width: 7rem;
+    background-color: var(--menu-item);
+    border: 2px solid var(--menu-item-border);
+    color: rgb(41, 41, 41);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2rem;
+    font-size: 1.5rem;
+    visibility: visible;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+.editBtn:active{
+    background-color: #c45f00;
+}
+.editBtn.hide{
+    visibility: hidden;
+}
 
 .stripformobile{display: none;}
 
 
 @media screen and (max-width:930px)  {
     .content{
-        width: 96%;
+        width: 94%;
         margin-top: 1.5rem;
     }
     .menusDesktop{
@@ -412,7 +441,7 @@ header{
         padding: 0;
     }
     .menuItems li{
-        height: 2.8rem;
+        height: 3rem;
         display: flex;
         align-items: center;
         border-bottom: 2px solid var(--menu-border);
