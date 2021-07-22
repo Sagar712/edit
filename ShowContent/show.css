@@ -108,14 +108,14 @@ header{
 }
 
 .saveAs{
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
     height: 10rem;
     width: 17rem;
     background-color: var(--background-color);
@@ -152,15 +152,14 @@ header{
     background-color: var(--menu-item-active);
 }
 .saveAs.show{
-    display: flex;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 .chooseFiles{
-    display: none;
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0);
     height: 25rem;
     width: 20rem;
     background-color: var(--background-color);
@@ -168,7 +167,7 @@ header{
     color: var(--text-color);
     border-radius: 15px;
     overflow-y: scroll;
-    transition: 0.5s all ease;
+    transition: 0.3s all ease;
     z-index: 9999;
 }
 .chooseFiles ul{
@@ -213,8 +212,8 @@ header{
     flex: 1;
 }
 .chooseFiles.show{
-    display: block;
-    transition: 0.5s all ease;
+    transform: translate(-50%, -50%) scale(1);
+    transition: 0.2s all ease;
 }
 
 .cotainer{
