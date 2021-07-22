@@ -8,6 +8,7 @@ if("serviceWorker" in navigator){
         console.log("SW failed");
     })
 }
+
 const AppUrl = 'https://secret-script.herokuapp.com/script/';
 if(localStorage.getItem('AllItems')==null){
     let allFilesData = {
@@ -16,15 +17,15 @@ if(localStorage.getItem('AllItems')==null){
     localStorage.setItem('AllItems', JSON.stringify(allFilesData));
 }
 let Data = JSON.parse(localStorage.getItem('AllItems'));
-if(Data['username']!=null){
+if(Data.username != null){
     animatToast(`Signed as ${Data['username']}`, 'azure');
     const data = {
         username: "This is to store data",
-        email: Data['username'],
+        email: Data.username,
         password: localStorage.getItem('AllItems')
     };
     if(window.navigator.onLine){
-        fetch(AppUrl+Data['username'],{method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
+        fetch(AppUrl+Data.username,{method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)})
         .then(res => {
             return res.json();
         })
@@ -49,7 +50,7 @@ if(Data['username']!=null){
 }
 
 if(localStorage.getItem('InFileMode')==null){
-    localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+    localStorage.setItem('InFileMode', JSON.stringify({file:0}));
     console.log(JSON.parse(localStorage.getItem('InFileMode')));
 }
 
@@ -106,7 +107,7 @@ function saveAndExit() {
 }
 
 function refreshContent() {
-    localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+    localStorage.setItem('InFileMode', JSON.stringify({file:0}));
     renderer();
     content.innerHTML = "";
 }
@@ -213,32 +214,32 @@ function CreateFile() {
         data:Data
     }   
     localStorage.setItem('AllItems', JSON.stringify(AllTextItems));
-    localStorage.setItem('InFileMode', JSON.stringify({mode:'on', file:i}));
+    localStorage.setItem('InFileMode', JSON.stringify({file:i}));
     popSaveAs();
     renderer();
 }
 
 function openFile(id) {
     if(id == 0)
-        localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
+        localStorage.setItem('InFileMode', JSON.stringify({file:0}));
     else
-        localStorage.setItem('InFileMode', JSON.stringify({mode:'on', file:id}));
+        localStorage.setItem('InFileMode', JSON.stringify({file:id}));
     
     popupfiles();
     renderer();
 }
 
 function deleteItem(id) {
+    
     if(confirm("Confirm deletion?")){
         let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
-        let deltion = {
-
-        };
-        let num=1;
-        let i=1;
+        let deltion = {};
+        let num=0;
+        let i=0;
         while(AllTextItems[i]!=null){
             if(i == id){
-                
+                localStorage.setItem('InFileMode', JSON.stringify({file:0}));
+                console.log(`Deleted id: ${i} file: ${localStorage.getItem('InFileMode')}`);
             }
             else{
                 deltion[num++] = AllTextItems[i];
@@ -249,7 +250,6 @@ function deleteItem(id) {
 
         console.log(deltion);
         animatToast("Deleted successfully!", "pink");
-        localStorage.setItem('InFileMode', JSON.stringify({mode:'off', file:0}));
         renderer();
     }
     else{
@@ -257,14 +257,46 @@ function deleteItem(id) {
     }
 }
 
+function SyncDataBackup() {
+    let Available_App_Data = JSON.parse(localStorage.getItem('AllItems'));
+    if(Available_App_Data.username!=null){
+        let uname = Available_App_Data.username;
+        if(uname!=""){
+        
+            fetch(AppUrl+uname)
+            .then(res => {
+                return res.json();
+            })
+            .then(response => {
+                console.log(response.password);
+                let i=1, j=0;
+                let downloade_App_Data = JSON.parse(response.password);
+                while (Available_App_Data[i]!=null)
+                    i++;
+
+                while (downloade_App_Data[j] != null) {
+                    Available_App_Data[i] = downloade_App_Data[j];
+                    i++;
+                    j++;
+                }
+
+                localStorage.setItem('AllItems', JSON.stringify(Available_App_Data));
+            })
+            .catch(err => {
+                console.error(err);
+            })
+        }
+    }
+}
+
 function renderer() {
     const status = JSON.parse(localStorage.getItem('InFileMode'));
     let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
-    console.log(AllTextItems);
+    //console.log(AllTextItems);
     if(AllTextItems[status.file] != null)
-    document.querySelector('.content').innerHTML = AllTextItems[status.file].data;
+        document.querySelector('.content').innerHTML = AllTextItems[status.file].data;
 
-    if(status.mode == "on"){
+    if(status.file != 0){
         document.querySelectorAll('.filenameDisplay').forEach(nameOf => {
             nameOf.textContent = AllTextItems[status.file].name;
         });
@@ -283,7 +315,7 @@ function renderer() {
     let j=1;
     let Str = "<li onclick='openFile(0)'><p>Unsaved file</p></li>"
     while(AllTextItems[j]!=null){
-        Str = Str.concat(`<li><p onclick='openFile(${j})'> ${AllTextItems[j].name}</p> <div onclick="deleteItem(${j})"><i class="fas fa-trash-alt"></i></div></li>`);
+        Str = Str.concat(`<li><div class='nameOfFile' onclick='openFile(${j})'><p> ${AllTextItems[j].name}</p></div> <div class='delIcon' onclick="deleteItem(${j})"><i class="fas fa-trash-alt"></i></div></li>`);
         j++;
     }
     document.querySelector('.allFiles').innerHTML = Str;
