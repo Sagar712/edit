@@ -145,8 +145,11 @@ function savedata() {
 
 
 function popSaveAs() {
+    content.contentEditable=false;
+    document.querySelector('.editBtn').classList.remove('hide');
     document.querySelector('.saveAs').classList.toggle('show');
     document.querySelector('.opacitor3').classList.toggle('active');
+    document.querySelector('.saveAs input').focus()
 }
 
 function animatToast(msg, bgColor) {

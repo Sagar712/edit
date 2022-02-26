@@ -122,8 +122,9 @@ header{
     border: 2px solid var(--table-border);
     color: var(--text-color);
     border-radius: 15px;
-    transition: 0.5s all ease;
+    transition: 0.3s all ease;
     z-index: 9999;
+    cursor: pointer;
 }
 .saveAs input{
     height: 1.7rem;
@@ -386,7 +387,12 @@ header{
         border-top: 3px solid rgb(179, 0, 0);
         border-bottom: 3px solid rgb(179, 0, 0);
     */
-
+    .editBtn{
+        width: 3.5rem;
+        height: 3.5rem;
+        left:85%;
+        font-size: 1.2rem;
+    }
     .toolbar1:last-child div{
         background-color: rgb(121, 216, 253);
         border-right: 1px solid rgb(0, 97, 187);
