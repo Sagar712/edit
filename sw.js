@@ -1,9 +1,9 @@
 self.addEventListener("install", e => {
     e.waitUntil(
         caches.open("Edit Rich Text").then(cache => {
-            return cache.addAll(["./", "./main.js", "./style.css", "./EditorApp2.png","./manifest.json",
-            "./ShowContent/show.html", "./ShowContent/show.css", 
-            "./ShowContent/show.js"]);
+            return cache.addAll(["./", "./EditorApp2.png","./manifest.json",
+            "./style.css", "./app.js", './import-export/import-export.html', 
+            './import-export/import-export.css', './import-export/import-export.js']);
         })
     );
 });
