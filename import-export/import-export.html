@@ -27,8 +27,11 @@
                 File will be stored in downloads folder with name <span style="color: rgb(255, 196, 0);">Back-Up-Data.json</span> 
             </p>
             <div class="butn">
-                <button onclick="exportFile()">
-                    export <i class="fas fa-upload"> </i>
+                <button class="exp" style="width: 7.5rem;" onclick="exportFile()">
+                    Export all</i>
+                </button>
+                <button class="exp" style="width: 7.5rem;" onclick="exportThis()">
+                    Current file</i>
                 </button>
             </div>
         </div>
@@ -41,7 +44,7 @@
             <div class="butn">
                 <input type="file" class="inputFile">
                 <button style="background-color: rgb(194, 0, 74);" onclick="importHandle()">
-                    import <i class="fas fa-download"></i> </i>
+                    Import <i class="fas fa-download"></i> </i>
                 </button>
             </div>
         </div>

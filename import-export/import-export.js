@@ -77,7 +77,113 @@ function exportFile() {
     download(JSON.stringify(masterDb), "Back-Up(Edit App).json", "text/plain");
 }
 
+let template_start=`<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root {
+            --background-color: #fff;
+            --text-color: #000000;
+            --menu-item: #FF9029;
+            --menu-item-active: #bb5a00;
+            --menu-item-border: #b44800;
+            --menu-text: #3C3C3C;
+            --menu-border: #696969;
+            --menuitem-click: #c2c2c2;
+            --menu-text: #5F5F5F;
+            --table-color: rgb(194, 194, 194);
+            --table-border: rgb(97, 97, 97);
+        }
+
+
+        [data-theme="dark"] {
+            --background-color: #2E2E2E;
+            --text-color: #fff;
+            --menu-item: #FF9029;
+            --menu-item-active: #bb5a00;
+            --menu-item-border: #b44800;
+            --menu-text: #3C3C3C;
+            --menu-border: #c2c2c2;
+            --menuitem-click: #7c7c7c;
+            --menu-text: #fff;
+            --table-color: rgb(68, 68, 68);
+            --table-border: rgb(146, 146, 146);
+        }
+
+        * {
+            margin: 0;
+            font-family: 'Kumbh Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            max-width: 100vw;
+            overflow-x: hidden;
+            transition: 1s all ease;
+            overscroll-behavior: contain;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            background-color: var(--background-color);
+            z-index: 9;
+            transition: 1s all ease;
+        }
+
+        .content {
+            min-height: 25vh;
+            width: 97%;
+            align-self: center;
+            font-size: 1.1rem;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin-top: 3rem;
+            margin-bottom: 25vh;
+            outline: none;
+            border-radius: 5px;
+            transition: 1s all ease;
+        }
+
+        .container pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+            white-space: -moz-pre-wrap;
+            white-space: -pre-wrap;
+            white-space: -o-pre-wrap;
+            word-wrap: break-word;
+            transition: 1s all ease;
+        }
+    </style>
+    <script>
+            document.documentElement.setAttribute("data-theme", "dark")
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <pre class="content">`
+
+
+let template_end = `</pre>
+</div>
+</body>
+
+</html>`
+
+function exportThis() {
+    let index = JSON.parse(localStorage.getItem(LocalStrIndex)).file
+    let obj = JSON.parse(localStorage.getItem(LocalStorNameData))
+    let html_data = obj[index].data
+    let html_name = obj[index].name
+    html_data = template_start+html_data+template_end
+    download(html_data, html_name+'.html', 'text/plain')
+}
 
 function download(data, strFileName, strMimeType) {
 

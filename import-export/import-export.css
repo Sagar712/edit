@@ -81,6 +81,7 @@ p{
     font-weight: bold;
     cursor: pointer;
     user-select: none;
+    margin: 0.5rem;
 }
 .butn button:active{
     background-color: rgb(2, 109, 170);
