@@ -8,55 +8,55 @@ if("serviceWorker" in navigator){
         console.log("SW failed");
     })
 }
-
+window.find()
 
 const AppUrl = 'https://secret-script.herokuapp.com/script/';
-if(localStorage.getItem('AllItems')==null){
+if (localStorage.getItem('AllItems') == null) {
     let allFilesData = {}
     localStorage.setItem('AllItems', JSON.stringify(allFilesData));
 }
 let Data = JSON.parse(localStorage.getItem('AllItems'));
 
 
-if(localStorage.getItem('InFileMode')==null){
-    localStorage.setItem('InFileMode', JSON.stringify({file:0}));
+if (localStorage.getItem('InFileMode') == null) {
+    localStorage.setItem('InFileMode', JSON.stringify({ file: 0 }));
     console.log(JSON.parse(localStorage.getItem('InFileMode')));
 }
 
 let clicked = false;
 const content = document.querySelector('.content');
 function triggerFirstClick() {
-    document.querySelector('.tools').style.transform='translateX(-50%)';
+    document.querySelector('.tools').style.transform = 'translateX(-50%)';
     document.querySelector('.editBtn').classList.add('hide');
-    clicked=true;
-    content.contentEditable=true;
+    clicked = true;
+    content.contentEditable = true;
     content.focus();
     console.log('Clicked');
 }
 
-function printIt(){
+function printIt() {
     console.log('typing...');
     savedata();
 }
 
-let dark=1;
-if(localStorage.getItem("DarkModeEditApp") == "on"){
+let dark = 1;
+if (localStorage.getItem("DarkModeEditApp") == "on") {
     document.querySelector('.circle').classList.add('move');
     document.querySelector('.toggleme').classList.add('move');
-    dark=0;
+    dark = 0;
 }
 function toggleCirc() {
     document.querySelector('.circle').classList.toggle('move');
     document.querySelector('.toggleme').classList.toggle('move');
-    if(dark==1){
+    if (dark == 1) {
         document.documentElement.setAttribute("data-theme", "dark");
         localStorage.setItem("DarkModeEditApp", "on");
-        dark=0;
+        dark = 0;
     }
-    else{
+    else {
         document.documentElement.setAttribute("data-theme", "root");
         localStorage.setItem("DarkModeEditApp", "off");
-        dark=1;
+        dark = 1;
     }
     renderer();
 }
@@ -66,17 +66,26 @@ function toggleMenu() {
     document.querySelector('.opacitor').classList.toggle('active');
 }
 
+function toggleSearch() {
+    document.querySelector('.menuItems').classList.remove('active');
+    document.querySelector('.opacitor').classList.remove('active');
+    document.querySelector('.search_bar').classList.toggle('active');
+    if(document.querySelector('.search_bar').classList.value == 'search_bar active'){
+        document.getElementById('search').focus()
+    }
+}
+
 function saveAndExit() {
     savedata();
     document.querySelector('.editBtn').classList.remove('hide');
-    document.querySelector('.tools').style.transform='translateX(0%)';
-    content.contentEditable=false;
+    document.querySelector('.tools').style.transform = 'translateX(0%)';
+    content.contentEditable = false;
     renderer();
     animatToast("Temp file saved !", "rgb(175, 255, 206)");
 }
 
 function refreshContent() {
-    localStorage.setItem('InFileMode', JSON.stringify({file:0}));
+    localStorage.setItem('InFileMode', JSON.stringify({ file: 0 }));
     renderer();
     content.innerHTML = "";
 }
@@ -85,34 +94,34 @@ const allbtns = document.querySelectorAll('.btn');
 let size = 0;
 let color = 0;
 allbtns.forEach(butn => {
-    
+
     butn.addEventListener('click', () => {
         let command = butn.dataset['element'];
         let colorOfPallete = "#fdff70";
         let colorOfFont = "white";
-        if(localStorage.getItem('DarkModeEditApp') == 'off'){
+        if (localStorage.getItem('DarkModeEditApp') == 'off') {
             colorOfPallete = "#9D0000";
             colorOfFont = "black";
         }
-        if(command == 'foreColor'){
-            if(color == 0){
+        if (command == 'foreColor') {
+            if (color == 0) {
                 document.execCommand(command, false, colorOfPallete);
                 butn.style.color = colorOfPallete;
                 color = 1;
             }
-            else{
+            else {
                 document.execCommand(command, false, colorOfFont);
                 butn.style.color = colorOfFont;
                 color = 0;
             }
         }
-        else if(command == 'fontSize'){
-            
-            if(size == 0){
+        else if (command == 'fontSize') {
+
+            if (size == 0) {
                 document.execCommand(command, false, 5);
                 size = 1;
             }
-            else{
+            else {
                 document.execCommand(command, false, 4);
                 size = 0;
             }
@@ -128,24 +137,24 @@ function savedata() {
     const status = JSON.parse(localStorage.getItem('InFileMode'));
     const source = document.querySelector('.content').innerHTML;
     let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
-    if(status.file == 0){
-        AllTextItems[0]={
-            name:'Unsaved file',
-            data:source
+    if (status.file == 0) {
+        AllTextItems[0] = {
+            name: 'Unsaved file',
+            data: source
         }
     }
-    else{
-        AllTextItems[status.file]={
-            name:AllTextItems[status.file].name,
-            data:source
+    else {
+        AllTextItems[status.file] = {
+            name: AllTextItems[status.file].name,
+            data: source
         }
-    }  
+    }
     localStorage.setItem('AllItems', JSON.stringify(AllTextItems));
 }
 
 
 function popSaveAs() {
-    content.contentEditable=false;
+    content.contentEditable = false;
     document.querySelector('.editBtn').classList.remove('hide');
     document.querySelector('.saveAs').classList.toggle('show');
     document.querySelector('.opacitor3').classList.toggle('active');
@@ -154,10 +163,10 @@ function popSaveAs() {
 
 function animatToast(msg, bgColor) {
     const toastNote = document.querySelector('.toastNotify');
-    if(toastNote.classList = "toastNotify animate")
-        toastNote.classList.remove('animate');
     toastNote.innerHTML = msg;
     toastNote.style.backgroundColor = bgColor;
+    if (toastNote.classList = "toastNotify animate")
+        toastNote.classList.remove('animate');
     toastNote.classList.add('animate');
     setTimeout(() => {
         toastNote.classList.remove('animate');
@@ -170,50 +179,48 @@ function popupfiles() {
     document.querySelector('.opacitor2').classList.toggle('active');
 }
 
-
-
 function CreateFile() {
     const filename = document.querySelector('.fileName').value;
     const Data = document.querySelector('.content').innerHTML;
-    
-    let i=1;
+
+    let i = 1;
     let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
-    while(AllTextItems[i]!=null){
+    while (AllTextItems[i] != null) {
         i++;
     }
     AllTextItems[i] = {
-        name:filename,
-        data:Data
-    }   
+        name: filename,
+        data: Data
+    }
     localStorage.setItem('AllItems', JSON.stringify(AllTextItems));
-    localStorage.setItem('InFileMode', JSON.stringify({file:i}));
+    localStorage.setItem('InFileMode', JSON.stringify({ file: i }));
     popSaveAs();
     renderer();
 }
 
 function openFile(id) {
-    if(id == 0)
-        localStorage.setItem('InFileMode', JSON.stringify({file:0}));
+    if (id == 0)
+        localStorage.setItem('InFileMode', JSON.stringify({ file: 0 }));
     else
-        localStorage.setItem('InFileMode', JSON.stringify({file:id}));
-    
+        localStorage.setItem('InFileMode', JSON.stringify({ file: id }));
+
     popupfiles();
     renderer();
 }
 
 function deleteItem(id) {
-    
-    if(confirm("Confirm deletion?")){
+
+    if (confirm("Confirm deletion?")) {
         let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
         let deltion = {};
-        let num=0;
-        let i=0;
-        while(AllTextItems[i]!=null){
-            if(i == id){
-                localStorage.setItem('InFileMode', JSON.stringify({file:0}));
+        let num = 0;
+        let i = 0;
+        while (AllTextItems[i] != null) {
+            if (i == id) {
+                localStorage.setItem('InFileMode', JSON.stringify({ file: 0 }));
                 console.log(`Deleted id: ${i} file: ${localStorage.getItem('InFileMode')}`);
             }
-            else{
+            else {
                 deltion[num++] = AllTextItems[i];
             }
             i++;
@@ -224,39 +231,39 @@ function deleteItem(id) {
         animatToast("Deleted successfully!", "pink");
         renderer();
     }
-    else{
+    else {
         animatToast("Calcelled deletion!", "pink");
     }
 }
 
 function SyncDataBackup() {
     let Available_App_Data = JSON.parse(localStorage.getItem('AllItems'));
-    if(Available_App_Data.username!=null){
+    if (Available_App_Data.username != null) {
         let uname = Available_App_Data.username;
-        if(uname!=""){
-        
-            fetch(AppUrl+uname)
-            .then(res => {
-                return res.json();
-            })
-            .then(response => {
-                console.log(response.password);
-                let i=1, j=0;
-                let downloade_App_Data = JSON.parse(response.password);
-                while (Available_App_Data[i]!=null)
-                    i++;
+        if (uname != "") {
 
-                while (downloade_App_Data[j] != null) {
-                    Available_App_Data[i] = downloade_App_Data[j];
-                    i++;
-                    j++;
-                }
+            fetch(AppUrl + uname)
+                .then(res => {
+                    return res.json();
+                })
+                .then(response => {
+                    console.log(response.password);
+                    let i = 1, j = 0;
+                    let downloade_App_Data = JSON.parse(response.password);
+                    while (Available_App_Data[i] != null)
+                        i++;
 
-                localStorage.setItem('AllItems', JSON.stringify(Available_App_Data));
-            })
-            .catch(err => {
-                console.error(err);
-            })
+                    while (downloade_App_Data[j] != null) {
+                        Available_App_Data[i] = downloade_App_Data[j];
+                        i++;
+                        j++;
+                    }
+
+                    localStorage.setItem('AllItems', JSON.stringify(Available_App_Data));
+                })
+                .catch(err => {
+                    console.error(err);
+                })
         }
     }
 }
@@ -265,10 +272,10 @@ function renderer() {
     const status = JSON.parse(localStorage.getItem('InFileMode'));
     let AllTextItems = JSON.parse(localStorage.getItem('AllItems'));
     //console.log(AllTextItems);
-    if(AllTextItems[status.file] != null)
+    if (AllTextItems[status.file] != null)
         document.querySelector('.content').innerHTML = AllTextItems[status.file].data;
 
-    if(status.file != 0){
+    if (status.file != 0) {
         document.querySelectorAll('.filenameDisplay').forEach(nameOf => {
             nameOf.textContent = AllTextItems[status.file].name;
         });
@@ -276,7 +283,7 @@ function renderer() {
             nameOf.style.display = "none";
         });
     }
-    else{
+    else {
         document.querySelectorAll('.filenameDisplay').forEach(nameOf => {
             nameOf.textContent = "Select file";
         });
@@ -284,31 +291,120 @@ function renderer() {
             nameOf.style.display = "flex";
         });
     }
-    let j=1;
+    let j = 1;
     let Str = "<li onclick='openFile(0)'><p>Unsaved file</p></li>"
-    while(AllTextItems[j]!=null){
+    while (AllTextItems[j] != null) {
         Str = Str.concat(`<li><div class='nameOfFile' onclick='openFile(${j})'><p> ${AllTextItems[j].name}</p></div> <div class='delIcon' onclick="deleteItem(${j})"><i class="fas fa-trash-alt"></i></div></li>`);
         j++;
     }
     document.querySelector('.allFiles').innerHTML = Str;
-    
+
     //To set theme
     const fonts = document.querySelectorAll('font');
-    if(localStorage.getItem('DarkModeEditApp') == 'off'){
+    if (localStorage.getItem('DarkModeEditApp') == 'off') {
         fonts.forEach(font => {
             console.log('red color');
-            if(font.color){
+            if (font.color) {
                 font.color = "#9D0000";
             }
         });
     }
-    else if(localStorage.getItem('DarkModeEditApp') == 'on'){
-        fonts.forEach(font => { 
-            console.log('yellow color');
-            if(font.color){
+    else if (localStorage.getItem('DarkModeEditApp') == 'on') {
+        fonts.forEach(font => {
+            if (font.color) {
                 font.color = "#fdff70";
             }
         });
     }
 }
 renderer();
+
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key.toLowerCase() === 's') {
+        e.preventDefault()
+        savedata();
+        document.querySelector('.editBtn').classList.remove('hide');
+        content.contentEditable = false;
+        renderer();
+        animatToast("Temp file saved !", "rgb(175, 255, 206)");
+    }
+
+    if (e.ctrlKey && e.key.toLowerCase() === 'a'){
+        e.preventDefault()
+        let content = document.querySelector('.content')
+        if (document.selection) { 
+            var range = document.body.createTextRange();
+            range.moveToElementText(content);
+            range.select();
+        }else if (window.getSelection) {
+            var range = document.createRange();
+            range.selectNode(content);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+        }
+    }
+
+}, false)
+
+// Search in page functionality:
+const searchbtn = document.getElementById('search')
+const textPara = document.querySelector('.content')
+const special = /[\\[{().+*?|^$]/g
+let allHighltd, selected, currentIndex;
+
+searchbtn.addEventListener('input', (e) => {
+    const input = e.target.value
+
+    if (input !== '') {
+        if (special.test(input))
+            input.replace(special, "\\$&");
+
+        let regExp = new RegExp(input, 'gi')
+        textPara.innerHTML = (textPara.textContent).replace(regExp, "<mark>$&</mark>")
+    }
+    else
+        textPara.innerHTML = (textPara.textContent).replace("<mark>", "").replace("</mark>", "");
+
+    allHighltd = document.querySelectorAll('mark');
+    // allHighltd.forEach(item => {
+    //     if(item.textContent.length>=3)
+    //         console.log(item.textContent);
+    // })
+    if (allHighltd[0] != null) {
+        selected = allHighltd[0]
+        selected.style.backgroundColor = 'orange'
+        currentIndex = 0
+        selected.scrollIntoView()
+    }
+})
+
+function Next() {
+    if (allHighltd[++currentIndex] != null) {
+        if (currentIndex <= allHighltd.length) {
+            makeAllNeutral()
+            selected = allHighltd[currentIndex]
+            selected.style.backgroundColor = 'orange'
+            console.log(currentIndex+1+" / "+ allHighltd.length);
+            selected.scrollIntoView()
+        }
+    }
+    
+}
+
+function Prev() {
+    if (allHighltd[--currentIndex] != null) {
+        if(currentIndex >= 0){
+            makeAllNeutral()
+            selected = allHighltd[currentIndex]
+            selected.style.backgroundColor = 'orange'
+            console.log(currentIndex+1+" / "+ allHighltd.length);
+            selected.scrollIntoView()
+        }
+    }
+}
+
+function makeAllNeutral() {
+    allHighltd.forEach(element => {
+        element.style.backgroundColor = 'yellow'
+    });
+}

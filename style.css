@@ -324,6 +324,7 @@ header{
 }
 
 .stripformobile{display: none;}
+.search_bar{display: none;}
 
 
 @media screen and (max-width:930px)  {
@@ -506,5 +507,46 @@ header{
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
+    }
+    .search_bar{
+        position: fixed;
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        left: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 3rem;
+        background-color: var(--background-color);
+        color: var(--text-color);
+    }
+    .search_bar.active{
+        display: flex;
+    }
+    .search_bar input{
+        height: 100%;
+        max-width: 100%;
+        border: none;
+        margin-left: 1rem;
+        background-color: transparent;
+        font-size: 1rem;
+        outline: none;
+        color: inherit;
+    }
+    /* .search_bar div{
+        margin-right: 0.5rem;
+    } */
+    .search_bar button{
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: inherit;
+        height: 3rem;
+        width: 3rem;
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    .search_bar button:active{
+        background-color: #7f7f7f;
     }
 }

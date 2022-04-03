@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
     <link rel="stylesheet" href="./style.css">
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
-      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous" />
     <link rel="shortcut icon" href="./EditorApp2.png" type="image/x-icon">
     <link rel="manifest" href="./manifest.json">
     <title>Document</title>
     <script>
-        let mode =localStorage.getItem("DarkModeEditApp");
-        if(mode=="off")
+        let mode = localStorage.getItem("DarkModeEditApp");
+        if (mode == "off")
             document.documentElement.setAttribute("data-theme", "root")
         else
             document.documentElement.setAttribute("data-theme", "dark")
     </script>
 </head>
+
 <body>
     <div class="opacitor2" onclick="popupfiles()"></div>
     <div class="opacitor3" onclick="popSaveAs()"></div>
@@ -61,8 +59,9 @@
 
     <div class="menuItems">
         <ul>
-            <li onclick="location.href='./import-export/import-export.html'"><p>Export | Import</p>
-                <i class="fas fa-file-alt" style="font-size: 1.5rem; margin-right: 1.4rem; font-weight: bolder;"></i>
+            <li onclick="location.href='./import-export/import-export.html'">
+                <p>Export | Import</p>
+                <i class="fas fa-folder" style="font-size: 1.5rem; margin-right: 1.4rem; font-weight: bolder;"></i>
             </li>
             <li>
                 <p>Night</p>
@@ -70,26 +69,28 @@
                     <div class="circle"></div>
                 </div>
             </li>
-            <li onclick="SyncDataBackup()">
-                <p>Sync backup</p>
-                <i class="fas fa-cloud-download-alt" style="font-size: 1.5rem; margin-right: 1.2rem; font-weight: bolder;"></i>
+            <li id="searchbtn" onclick="toggleSearch()">
+                <p>Search in page</p>
+                <i class="fas fa-search" style="font-size: 1.5rem; margin-right: 1.2rem; font-weight: bolder;"></i>
             </li>
             <li onclick="SyncDataBackup()">
-                <p>Take backup</p>
-                <i class="fas fa-cloud-upload-alt" style="font-size: 1.5rem; margin-right: 1.2rem; font-weight: bolder;"></i>
+                <p>Profile</p>
+                <i class="fas fa-user" style="font-size: 1.5rem; margin-right: 1.2rem; font-weight: bolder;"></i>
             </li>
         </ul>
     </div>
     <div class="opacitor" onclick="toggleMenu()"></div>
     <div class="container">
-        <pre class="content"  onkeyup="printIt()" onblur="focus()"></pre>
+        <pre class="content" onkeyup="printIt()" onblur="focus()"></pre>
     </div>
 
     <div class="toastNotify"></div>
 
     <div class="tools">
         <div class="toolbar1">
-            <div onclick="popupfiles()" ><p class="filenameDisplay">Select File</p> </div>
+            <div onclick="popupfiles()">
+                <p class="filenameDisplay">Select File</p>
+            </div>
             <div onclick="popSaveAs()" class="hideIf">Save as</div>
             <div onclick="refreshContent()">New</div>
             <div onclick="toggleMenu()"><i class="fas fa-ellipsis-v"></i></div>
@@ -104,10 +105,21 @@
             <div onclick="saveAndExit()"><i class="fas fa-check"></i></div>
         </div>
     </div>
+
     <div class="editBtn" onclick="triggerFirstClick()">
         <div><i class="fas fa-pen"></i></div>
     </div>
-    
+
+    <div class="search_bar">
+        <input type="text" id="search" placeholder="Search in page..." autocomplete="off">
+        <div>
+            <button onclick="Next()">&or;</button>
+            <button onclick="Prev()">&and;</button>
+            <button onclick="toggleSearch()">&times;</button>
+        </div>
+    </div>
+
     <script src="./app.js"></script>
 </body>
+
 </html>
